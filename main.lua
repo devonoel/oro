@@ -1,7 +1,9 @@
 function love.load()
+  scale = 5
+
   snake = {
-    x = 256,
-    y = 256,
+    x = 75,
+    y = 67,
   }
 
   colours = {
@@ -13,9 +15,17 @@ function love.load()
 end
 
 function love.draw()
-  love.graphics.scale(5,5)
-  love.graphics.setColor(colours.light)
-  love.graphics.rectangle("fill", 0, 0, 160, 144)
+  love.graphics.scale(scale,scale)
+  love.graphics.setBackgroundColor(colours.light)
+  draw_borders()
+  draw_snake()
+end
+
+function love.update(dt)
+
+end
+
+function draw_borders()
   love.graphics.setColor(colours.mid_dark)
   love.graphics.rectangle("fill", 0, 0, 5, 144)
   love.graphics.rectangle("fill", 0, 0, 160, 5)
@@ -23,6 +33,7 @@ function love.draw()
   love.graphics.rectangle("fill", 0, 139, 160, 5)
 end
 
-function love.update(dt)
-
+function draw_snake()
+  love.graphics.setColor(colours.mid_dark)
+  love.graphics.rectangle("fill", snake.x, snake.y, scale, scale)
 end
