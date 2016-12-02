@@ -21,6 +21,7 @@ function love.load()
       },
     },
     speed = 0.07,
+    last_move = {x = 5, y = 0},
   }
 
   colours = {
@@ -41,6 +42,10 @@ function love.draw()
 end
 
 function love.keypressed(key)
+  if key == "g" then
+    grow()
+  end
+
   if key == "r" then
     shrink()
   end
@@ -81,11 +86,26 @@ function move(delta_x,delta_y)
     temp[i+1] = snake.segments[i]
   end
 
+  snake.last_move = {
+    x = delta_x,
+    y = delta_y
+  }
+
   snake.segments = temp
 end
 
 function shrink()
-  table.remove(snake.segments)
+  if table.getn(snake.segments) > 1 then
+    table.remove(snake.segments)
+  end
+end
+
+function grow()
+  l = table.getn(snake.segments)
+  snake.segments[l+1] = {
+    x = snake.segments[l].x - snake.last_move.x,
+    y = snake.segments[l].y - snake.last_move.y,
+  }
 end
 
 function draw_borders()
