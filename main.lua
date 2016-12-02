@@ -40,6 +40,16 @@ function love.draw()
   draw_snake()
 end
 
+function love.keypressed(key)
+  if key == "r" then
+    shrink()
+  end
+
+  if key == "escape" then
+    love.event.quit()
+  end
+end
+
 function love.update(dt)
   tick(dt)
 
@@ -72,6 +82,10 @@ function move(delta_x,delta_y)
   end
 
   snake.segments = temp
+end
+
+function shrink()
+  table.remove(snake.segments)
 end
 
 function draw_borders()
