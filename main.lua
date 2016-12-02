@@ -2,8 +2,25 @@ function love.load()
   scale = 5
 
   snake = {
-    x = 75,
-    y = 67,
+    segments = {
+      {
+        x = 75,
+        y = 67,
+      },
+      {
+        x = 70,
+        y = 67,
+      },
+      {
+        x = 65,
+        y = 67,
+      },
+      {
+        x = 65,
+        y = 62,
+      },
+    },
+    speed = 0.07,
   }
 
   colours = {
@@ -12,6 +29,8 @@ function love.load()
     mid_light = {139,172,15,255},
     light = {155,188,15,255},
   }
+
+  timer = 0
 end
 
 function love.draw()
@@ -22,7 +41,37 @@ function love.draw()
 end
 
 function love.update(dt)
+  tick(dt)
 
+  if love.keyboard.isDown("left") and timer >= snake.speed then
+    timer = 0
+    move(-scale,0)
+  end
+
+  if love.keyboard.isDown("right") and timer >= snake.speed then
+    timer = 0
+    move(scale,0)
+  end
+
+  if love.keyboard.isDown("up") and timer >= snake.speed then
+    timer = 0
+    move(0,-scale)
+  end
+
+  if love.keyboard.isDown("down") and timer >= snake.speed then
+    timer = 0
+    move(0,scale)
+  end
+end
+
+function move(delta_x,delta_y)
+  temp = {{x = snake.segments[1].x + delta_x, y = snake.segments[1].y + delta_y}}
+
+  for i=1, table.getn(snake.segments) - 1 do
+    temp[i+1] = snake.segments[i]
+  end
+
+  snake.segments = temp
 end
 
 function draw_borders()
@@ -35,5 +84,13 @@ end
 
 function draw_snake()
   love.graphics.setColor(colours.mid_dark)
-  love.graphics.rectangle("fill", snake.x, snake.y, scale, scale)
+  for i=1, table.getn(snake.segments) do
+    love.graphics.rectangle("fill", snake.segments[i].x, snake.segments[i].y, scale, scale)
+  end
+end
+
+function tick(dt)
+  if timer < snake.speed then
+    timer = timer + dt
+  end
 end
