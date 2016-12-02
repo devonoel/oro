@@ -1,27 +1,27 @@
 function love.load()
-  scale = 5
+  scale = 4
 
   snake = {
     segments = {
       {
-        x = 75,
-        y = 67,
+        x = 76,
+        y = 68,
       },
       {
-        x = 70,
-        y = 67,
+        x = 72,
+        y = 68,
       },
       {
-        x = 65,
-        y = 67,
+        x = 68,
+        y = 68,
       },
       {
-        x = 65,
-        y = 62,
+        x = 68,
+        y = 64,
       },
     },
     speed = 0.07,
-    last_move = {x = 5, y = 0},
+    last_move = {x = scale, y = 0},
   }
 
   colours = {
@@ -110,10 +110,10 @@ end
 
 function draw_borders()
   love.graphics.setColor(colours.mid_dark)
-  love.graphics.rectangle("fill", 0, 0, 5, 144)
-  love.graphics.rectangle("fill", 0, 0, 160, 5)
-  love.graphics.rectangle("fill", 155, 0, 5, 144)
-  love.graphics.rectangle("fill", 0, 139, 160, 5)
+  love.graphics.rectangle("fill", 0, 0, scale, 144)
+  love.graphics.rectangle("fill", 0, 0, 160, scale)
+  love.graphics.rectangle("fill", 156, 0, scale, 144)
+  love.graphics.rectangle("fill", 0, 140, 160, scale)
 end
 
 function draw_snake()
