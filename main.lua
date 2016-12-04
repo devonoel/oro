@@ -40,10 +40,12 @@ end
 function love.draw()
   love.graphics.scale(scale,scale)
   love.graphics.setBackgroundColor(colours.light)
+  draw_borders()
 
   if started then
-    draw_borders()
     draw_snake()
+  else
+    draw_title()
   end
 end
 
@@ -138,6 +140,14 @@ function draw_snake()
   for i=1, table.getn(snake.segments) do
     love.graphics.rectangle("fill", snake.segments[i].x, snake.segments[i].y, scale, scale)
   end
+end
+
+function draw_title()
+  love.graphics.setColor(colours.mid_dark)
+  love.graphics.rectangle("fill", 60, 52, 40, 4)
+  love.graphics.rectangle("fill", 60, 52, 4, 40)
+  love.graphics.rectangle("fill", 60, 88, 40, 4)
+  love.graphics.rectangle("fill", 96, 52, 4, 40)
 end
 
 function tick(dt)
