@@ -1,5 +1,7 @@
 function love.load()
   scale = 4
+  width = 160
+  height = 144
 
   snake = {
     segments = {
@@ -80,7 +82,14 @@ function love.update(dt)
 end
 
 function move(delta_x,delta_y)
-  temp = {{x = snake.segments[1].x + delta_x, y = snake.segments[1].y + delta_y}}
+  new_x = snake.segments[1].x + delta_x
+  new_y = snake.segments[1].y + delta_y
+
+  if new_x < scale or new_y < scale or new_x > width - scale*2 or new_y > height - scale*2 then
+    return
+  end
+
+  temp = {{x = new_x, y = new_y}}
 
   for i=1, table.getn(snake.segments) - 1 do
     temp[i+1] = snake.segments[i]
