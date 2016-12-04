@@ -1,4 +1,5 @@
 function love.load()
+  started = false
   scale = 4
   width = 160
   height = 144
@@ -39,8 +40,11 @@ end
 function love.draw()
   love.graphics.scale(scale,scale)
   love.graphics.setBackgroundColor(colours.light)
-  draw_borders()
-  draw_snake()
+
+  if started then
+    draw_borders()
+    draw_snake()
+  end
 end
 
 function love.keypressed(key)
@@ -50,6 +54,10 @@ function love.keypressed(key)
 
   if key == "r" then
     shrink()
+  end
+
+  if key == "space" then
+    started = true
   end
 
   if key == "escape" then
