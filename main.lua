@@ -95,6 +95,12 @@ function move(delta_x,delta_y)
   new_x = snake.segments[1].x + delta_x
   new_y = snake.segments[1].y + delta_y
 
+  -- Don't let the snake move backwards over itself
+  if snake.last_move.x == -delta_x and snake.last_move.y == -delta_y then
+    return
+  end
+
+  -- Don't let the snake move past walls
   if new_x < scale or new_y < scale or new_x > width - scale*2 or new_y > height - scale*2 then
     return
   end
