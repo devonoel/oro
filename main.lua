@@ -1,31 +1,15 @@
 function love.load()
-  started = false
+  state = {
+    started = false,
+    dead = false,
+  }
+
   scale = 4
   width = 160
   height = 144
 
-  snake = {
-    segments = {
-      {
-        x = 76,
-        y = 68,
-      },
-      {
-        x = 72,
-        y = 68,
-      },
-      {
-        x = 68,
-        y = 68,
-      },
-      {
-        x = 68,
-        y = 64,
-      },
-    },
-    speed = 0.07,
-    last_move = {x = scale, y = 0},
-  }
+  snake = {}
+  load_snake()
 
   colours = {
     dark = {15,56,15,255},
@@ -42,10 +26,14 @@ function love.draw()
   love.graphics.setBackgroundColor(colours.light)
   draw_borders()
 
-  if started then
+  if state.started then
     draw_snake()
   else
-    draw_win()
+    if state.dead ~= true then
+      draw_win()
+    else
+      draw_loss()
+    end
   end
 end
 
@@ -59,7 +47,7 @@ function love.keypressed(key)
   end
 
   if key == "space" then
-    started = true
+    state.started = true
   end
 
   if key == "escape" then
@@ -94,6 +82,13 @@ end
 function move(delta_x,delta_y)
   new_x = snake.segments[1].x + delta_x
   new_y = snake.segments[1].y + delta_y
+  length = table.getn(snake.segments)
+
+  if new_x == snake.segments[length].x and new_y == snake.segments[length].y then
+    state.started = false
+    load_snake()
+    return
+  end
 
   -- Don't let the snake move backwards over itself
   if snake.last_move.x == -delta_x and snake.last_move.y == -delta_y then
@@ -107,7 +102,7 @@ function move(delta_x,delta_y)
 
   temp = {{x = new_x, y = new_y}}
 
-  for i=1, table.getn(snake.segments) - 1 do
+  for i=1, length - 1 do
     temp[i+1] = snake.segments[i]
   end
 
@@ -169,4 +164,29 @@ function tick(dt)
   if timer < snake.speed then
     timer = timer + dt
   end
+end
+
+function load_snake()
+  snake = {
+    segments = {
+      {
+        x = 76,
+        y = 68,
+      },
+      {
+        x = 72,
+        y = 68,
+      },
+      {
+        x = 68,
+        y = 68,
+      },
+      {
+        x = 68,
+        y = 64,
+      },
+    },
+    speed = 0.07,
+    last_move = {x = scale, y = 0},
+  }
 end
