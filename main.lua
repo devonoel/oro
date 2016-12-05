@@ -45,7 +45,7 @@ function love.draw()
   if started then
     draw_snake()
   else
-    draw_title()
+    draw_win()
   end
 end
 
@@ -148,12 +148,21 @@ function draw_snake()
   end
 end
 
-function draw_title()
+function draw_loss()
   love.graphics.setColor(colours.mid_dark)
-  love.graphics.rectangle("fill", 60, 52, 40, 4)
-  love.graphics.rectangle("fill", 60, 52, 4, 40)
-  love.graphics.rectangle("fill", 60, 88, 40, 4)
-  love.graphics.rectangle("fill", 96, 52, 4, 40)
+  love.graphics.rectangle("fill", 76, 68, 4, 4)
+  love.graphics.rectangle("fill", 72, 64, 4, 4)
+  love.graphics.rectangle("fill", 72, 72, 4, 4)
+  love.graphics.rectangle("fill", 80, 64, 4, 4)
+  love.graphics.rectangle("fill", 80, 72, 4, 4)
+end
+
+function draw_win()
+  love.graphics.setColor(colours.mid_dark)
+  love.graphics.rectangle("fill", 72, 64, 12, 4)
+  love.graphics.rectangle("fill", 72, 72, 12, 4)
+  love.graphics.rectangle("fill", 72, 64, 4, 12)
+  love.graphics.rectangle("fill", 80, 64, 4, 12)
 end
 
 function tick(dt)
