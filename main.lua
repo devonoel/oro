@@ -86,6 +86,7 @@ function move(delta_x,delta_y)
 
   if new_x == snake.segments[length].x and new_y == snake.segments[length].y then
     state.started = false
+    state.dead = false
     load_snake()
     return
   end
@@ -103,6 +104,13 @@ function move(delta_x,delta_y)
   temp = {{x = new_x, y = new_y}}
 
   for i=1, length - 1 do
+    if new_x == snake.segments[i].x and new_y == snake.segments[i].y then
+      state.started = false
+      state.dead = true
+      load_snake()
+      return
+    end
+
     temp[i+1] = snake.segments[i]
   end
 
