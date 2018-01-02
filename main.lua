@@ -123,7 +123,7 @@ function move(delta_x,delta_y)
 end
 
 function shrink()
-  if table.getn(snake.segments) > 1 then
+  if table.getn(snake.segments) > 3 then
     table.remove(snake.segments)
   end
 end
@@ -137,7 +137,7 @@ function grow()
 end
 
 function draw_borders()
-  love.graphics.setColor(colours.mid_dark)
+  love.graphics.setColor(colours.dark)
   love.graphics.rectangle("fill", 0, 0, scale, 144)
   love.graphics.rectangle("fill", 0, 0, 160, scale)
   love.graphics.rectangle("fill", 156, 0, scale, 144)
@@ -146,13 +146,18 @@ end
 
 function draw_snake()
   love.graphics.setColor(colours.mid_dark)
-  for i=1, table.getn(snake.segments) do
+  love.graphics.rectangle("fill", snake.segments[1].x, snake.segments[1].y, scale, scale)
+  love.graphics.setColor(colours.mid_light)
+  love.graphics.rectangle("fill", snake.segments[2].x, snake.segments[2].y, scale, scale)
+
+  love.graphics.setColor(colours.mid_dark)
+  for i=3, table.getn(snake.segments) do
     love.graphics.rectangle("fill", snake.segments[i].x, snake.segments[i].y, scale, scale)
   end
 end
 
 function draw_loss()
-  love.graphics.setColor(colours.mid_dark)
+  love.graphics.setColor(colours.dark)
   love.graphics.rectangle("fill", 76, 68, 4, 4)
   love.graphics.rectangle("fill", 72, 64, 4, 4)
   love.graphics.rectangle("fill", 72, 72, 4, 4)
@@ -161,7 +166,7 @@ function draw_loss()
 end
 
 function draw_win()
-  love.graphics.setColor(colours.mid_dark)
+  love.graphics.setColor(colours.dark)
   love.graphics.rectangle("fill", 72, 64, 12, 4)
   love.graphics.rectangle("fill", 72, 72, 12, 4)
   love.graphics.rectangle("fill", 72, 64, 4, 12)
@@ -190,7 +195,11 @@ function load_snake()
         y = 68,
       },
       {
-        x = 68,
+        x = 64,
+        y = 68,
+      },
+      {
+        x = 64,
         y = 64,
       },
     },
