@@ -158,19 +158,39 @@ end
 
 function draw_loss()
   love.graphics.setColor(colours.dark)
+  -- Center
   love.graphics.rectangle("fill", 76, 68, 4, 4)
+
+  -- Top left
   love.graphics.rectangle("fill", 72, 64, 4, 4)
+  love.graphics.rectangle("fill", 68, 60, 4, 4)
+
+  -- Bottom left
   love.graphics.rectangle("fill", 72, 72, 4, 4)
+  love.graphics.rectangle("fill", 68, 76, 4, 4)
+
+  -- Top right
   love.graphics.rectangle("fill", 80, 64, 4, 4)
+  love.graphics.rectangle("fill", 84, 60, 4, 4)
+
+  -- Bottom right
   love.graphics.rectangle("fill", 80, 72, 4, 4)
+  love.graphics.rectangle("fill", 84, 76, 4, 4)
 end
 
 function draw_win()
   love.graphics.setColor(colours.dark)
-  love.graphics.rectangle("fill", 72, 64, 12, 4)
-  love.graphics.rectangle("fill", 72, 72, 12, 4)
-  love.graphics.rectangle("fill", 72, 64, 4, 12)
-  love.graphics.rectangle("fill", 80, 64, 4, 12)
+  -- Top
+  love.graphics.rectangle("fill", 68, 60, 20, 4)
+
+  -- Bottom
+  love.graphics.rectangle("fill", 68, 76, 20, 4)
+
+  -- Left
+  love.graphics.rectangle("fill", 68, 60, 4, 20)
+
+  -- Right
+  love.graphics.rectangle("fill", 84, 60, 4, 20)
 end
 
 function tick(dt)
