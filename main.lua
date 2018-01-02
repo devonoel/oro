@@ -59,25 +59,41 @@ end
 function love.update(dt)
   tick(dt)
 
-  if love.keyboard.isDown("left") and timer >= snake.speed then
+  if is_left() and timer >= snake.speed then
     timer = 0
     move(-scale,0)
   end
 
-  if love.keyboard.isDown("right") and timer >= snake.speed then
+  if is_right() and timer >= snake.speed then
     timer = 0
     move(scale,0)
   end
 
-  if love.keyboard.isDown("up") and timer >= snake.speed then
+  if is_up() and timer >= snake.speed then
     timer = 0
     move(0,-scale)
   end
 
-  if love.keyboard.isDown("down") and timer >= snake.speed then
+  if is_down() and timer >= snake.speed then
     timer = 0
     move(0,scale)
   end
+end
+
+function is_left()
+  return (love.keyboard.isDown("left") or love.keyboard.isDown("a"))
+end
+
+function is_right()
+  return (love.keyboard.isDown("right") or love.keyboard.isDown("d"))
+end
+
+function is_down()
+  return (love.keyboard.isDown("down") or love.keyboard.isDown("s"))
+end
+
+function is_up()
+  return (love.keyboard.isDown("up") or love.keyboard.isDown("w"))
 end
 
 function move(delta_x,delta_y)
