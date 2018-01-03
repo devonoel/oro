@@ -2,6 +2,7 @@ function love.load()
   state = {
     started = false,
     dead = false,
+    won = false,
   }
 
   scale = 4
@@ -29,11 +30,12 @@ function love.draw()
   if state.started then
     draw_snake()
   else
-    if state.dead ~= true then
-      -- draw_win()
-      draw_title()
-    else
+    if state.dead == true then
       draw_loss()
+    elseif state.won == true then
+      draw_win()
+    else
+      draw_title()
     end
   end
 end
@@ -48,7 +50,7 @@ function love.keypressed(key)
   end
 
   if key == "space" then
-    state.started = true
+    restart()
   end
 
   if key == "escape" then
@@ -80,6 +82,13 @@ function love.update(dt)
   end
 end
 
+function restart()
+  load_snake()
+  state.started = true
+  state.dead = false
+  state.won = false
+end
+
 function is_left()
   return (love.keyboard.isDown("left") or love.keyboard.isDown("a"))
 end
@@ -101,10 +110,11 @@ function move(delta_x,delta_y)
   new_y = snake.segments[1].y + delta_y
   length = table.getn(snake.segments)
 
+  -- You won!
   if new_x == snake.segments[length].x and new_y == snake.segments[length].y then
     state.started = false
     state.dead = false
-    load_snake()
+    state.won = true
     return
   end
 
@@ -120,11 +130,12 @@ function move(delta_x,delta_y)
 
   temp = {{x = new_x, y = new_y}}
 
+  -- You dead!
   for i=1, length - 1 do
     if new_x == snake.segments[i].x and new_y == snake.segments[i].y then
       state.started = false
       state.dead = true
-      load_snake()
+      state.won = false
       return
     end
 
@@ -175,39 +186,28 @@ end
 
 function draw_loss()
   love.graphics.setColor(colours.dark)
-  -- Center
-  love.graphics.rectangle("fill", 76, 68, 4, 4)
 
-  -- Top left
-  love.graphics.rectangle("fill", 72, 64, 4, 4)
-  love.graphics.rectangle("fill", 68, 60, 4, 4)
+  -- Eyes
+  love.graphics.rectangle("fill", 68, 60, 4, 8)
+  love.graphics.rectangle("fill", 84, 60, 4, 8)
 
-  -- Bottom left
-  love.graphics.rectangle("fill", 72, 72, 4, 4)
-  love.graphics.rectangle("fill", 68, 76, 4, 4)
-
-  -- Top right
-  love.graphics.rectangle("fill", 80, 64, 4, 4)
-  love.graphics.rectangle("fill", 84, 60, 4, 4)
-
-  -- Bottom right
-  love.graphics.rectangle("fill", 80, 72, 4, 4)
-  love.graphics.rectangle("fill", 84, 76, 4, 4)
+  -- Mouth
+  love.graphics.rectangle("fill", 72, 76, 12, 4)
+  love.graphics.rectangle("fill", 68, 80, 4, 4)
+  love.graphics.rectangle("fill", 84, 80, 4, 4)
 end
 
 function draw_win()
   love.graphics.setColor(colours.dark)
-  -- Top
-  love.graphics.rectangle("fill", 68, 60, 20, 4)
 
-  -- Bottom
-  love.graphics.rectangle("fill", 68, 76, 20, 4)
+  -- Eyes
+  love.graphics.rectangle("fill", 68, 60, 4, 8)
+  love.graphics.rectangle("fill", 84, 60, 4, 8)
 
-  -- Left
-  love.graphics.rectangle("fill", 68, 60, 4, 20)
-
-  -- Right
-  love.graphics.rectangle("fill", 84, 60, 4, 20)
+  -- Mouth
+  love.graphics.rectangle("fill", 72, 80, 12, 4)
+  love.graphics.rectangle("fill", 68, 76, 4, 4)
+  love.graphics.rectangle("fill", 84, 76, 4, 4)
 end
 
 function draw_title()
